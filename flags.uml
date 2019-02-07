@@ -1,0 +1,73 @@
+@startuml
+
+skinparam class { 
+  backgroundColor PowderBlue 
+  borderColor MidnightBlue 
+}
+
+package service {
+  interface Service
+  
+  package service.flag {
+    class FlagService 
+
+    package service.flag.data {
+      class FlagRepository 
+      class DataLoader 
+    }
+  }
+}
+
+package server {
+  interface Server 
+  
+  package server.spring {
+    class SpringServer 
+  }
+
+  package server.vertx #DDDDDD {
+    class VertxServer
+  }
+
+  package server.spark #DDDDDD {
+    class SparkServer
+  }
+}
+
+
+package data {
+  interface DataStore
+
+  class MemoryDataStore
+
+  package data.mapdb {
+    class MapdbDataStore
+  }
+  package data.jdbc {
+    class JDBCDataStore
+  }
+  package data.mongo #DDDDDD {
+    class MongoDataStore
+  }
+}
+
+Service <-- FlagService
+
+Server <-- SpringServer
+Server <-- VertxServer
+Server <-- SparkServer
+
+DataStore <-- JDBCDataStore
+DataStore <-- MapdbDataStore
+DataStore <-- MongoDataStore
+
+
+FlagRepository *-- DataStore 
+DataLoader *-- FlagRepository : Injects <
+FlagService *-- FlagRepository
+
+Service *-- Server 
+Service *-- DataStore
+
+@enduml
+
