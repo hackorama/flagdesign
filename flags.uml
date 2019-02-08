@@ -1,8 +1,11 @@
 @startuml
 
-skinparam class { 
-  backgroundColor PowderBlue 
-  borderColor MidnightBlue 
+skinparam { 
+  InterfaceBackgroundColor #FF0000 
+  InterfaceBorderColor #00FF00 
+
+  ClassBackgroundColor powderBlue 
+  ClassBorderColor midnightBlue 
 }
 
 package service {
@@ -57,17 +60,23 @@ Server <-- SpringServer
 Server <-- VertxServer
 Server <-- SparkServer
 
-DataStore <-- JDBCDataStore
+DataStore <-- MemoryDataStore
 DataStore <-- MapdbDataStore
+DataStore <-- JDBCDataStore
 DataStore <-- MongoDataStore
 
 
-FlagRepository *-- DataStore 
-DataLoader *-- FlagRepository : Injects <
-FlagService *-- FlagRepository
+FlagService *-[#008800]- FlagRepository
+FlagService -[#000000,dotted]- DataLoader : invoke >
+DataLoader *-[#008800]- FlagRepository : inject <
+FlagRepository *-[dashed,#00AA00]- DataStore 
 
-Service *-- Server 
-Service *-- DataStore
+Service *-[#0000AA]- Server 
+Service *-[#0000AA]- DataStore
+
+title
+  Flags Micro Service Design
+end title
 
 footer
   Unimplemented classes are in <color:gray>gray</color> color
