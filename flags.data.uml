@@ -1,0 +1,31 @@
+@startuml
+
+skinparam { 
+  ClassBackgroundColor powderBlue 
+  ClassBorderColor midnightBlue 
+}
+
+hide circle
+hide empty members
+
+title
+  Flags Data Model 
+end title
+
+
+entity CONTINENT_COUNTRIES {
+  * CONTINENT
+  * COUNTRY 
+}
+
+entity COUNTRY_FLAG {
+  * COUNTRY 
+  * FLAG 
+}
+
+CONTINENT ||--|{ COUNTRY
+
+COUNTRY ||--|| FLAG
+
+@enduml
+
