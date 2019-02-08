@@ -1,12 +1,17 @@
 @startuml
 
 skinparam { 
-  InterfaceBackgroundColor #FF0000 
-  InterfaceBorderColor #00FF00 
-
   ClassBackgroundColor powderBlue 
   ClassBorderColor midnightBlue 
 }
+
+allow_mixing
+
+title
+  Flags Micro Service Design
+end title
+
+' Service Module
 
 package service {
   interface Service
@@ -20,6 +25,8 @@ package service {
     }
   }
 }
+
+' Server Module
 
 package server {
   interface Server 
@@ -36,6 +43,8 @@ package server {
     class SparkServer #DDDDDD
   }
 }
+
+' Data Module
 
 
 package data {
@@ -54,6 +63,16 @@ package data {
   }
 }
 
+' External  Modules
+
+database "Data Store" #FFFFFF
+
+file "JSON Data" #FFFFFF
+
+cloud "API Clients" #FFFFFF 
+
+' Dependencies
+
 Service <-- FlagService
 
 Server <-- SpringServer
@@ -65,7 +84,6 @@ DataStore <-- MapdbDataStore
 DataStore <-- JDBCDataStore
 DataStore <-- MongoDataStore
 
-
 FlagService *-[#008800]- FlagRepository
 FlagService -[#000000,dotted]- DataLoader : invoke >
 DataLoader *-[#008800]- FlagRepository : inject <
@@ -74,9 +92,9 @@ FlagRepository *-[dashed,#00AA00]- DataStore
 Service *-[#0000AA]- Server 
 Service *-[#0000AA]- DataStore
 
-title
-  Flags Micro Service Design
-end title
+DataLoader -[#000000]- "JSON Data"
+data -[#000000]- "Data Store" 
+server -[#000000]- "API Clients"
 
 footer
   Unimplemented classes are in <color:gray>gray</color> color
