@@ -26,11 +26,11 @@ package server {
   }
 
   package server.vertx #DDDDDD {
-    class VertxServer
+    class VertxServer #DDDDDD
   }
 
   package server.spark #DDDDDD {
-    class SparkServer
+    class SparkServer #DDDDDD
   }
 }
 
@@ -47,7 +47,7 @@ package data {
     class JDBCDataStore
   }
   package data.mongo #DDDDDD {
-    class MongoDataStore
+    class MongoDataStore #DDDDDD
   }
 }
 
@@ -68,6 +68,10 @@ FlagService *-- FlagRepository
 
 Service *-- Server 
 Service *-- DataStore
+
+footer
+  Unimplemented classes are in <color:gray>gray</color> color
+end footer
 
 @enduml
 
